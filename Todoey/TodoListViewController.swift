@@ -18,7 +18,7 @@ class TodoListViewController: UITableViewController {
     }
     
     
-    
+    // tableview Datasource Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
@@ -31,7 +31,10 @@ class TodoListViewController: UITableViewController {
         return cell
     }
     
-
+    //Tableview Delegate Methods
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
     
     
     
