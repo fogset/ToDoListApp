@@ -27,6 +27,8 @@ class TodoListViewController: UITableViewController {
         newItem3.title = "Destroy Demogorgon"
         itemArray.append(newItem3)
         
+        
+        
 //        if let items = defaults.array(forKey: "TodoListArray") as? [String]{
 //            itemArray = items
 //        }
@@ -42,25 +44,33 @@ class TodoListViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellhi", for: indexPath)
         
-        cell.textLabel?.text = itemArray[indexPath.row].title
+        let item = itemArray[indexPath.row]
+        cell.textLabel?.text = item.title
+        
+        
+        
+        if item.done == true{
+            cell.accessoryType = .checkmark
+        }else{
+            cell.accessoryType = .none
+        }
+        
         return cell
     }
     
     //Tableview Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-    
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark{
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        }else{
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
+        // set the checkmark state once it has been clicked
+        itemArray[indexPath.row].done = !itemArray[indexPath].done
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    //MARK - Add New Items
     
+    //MARK - Add New Items
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         
