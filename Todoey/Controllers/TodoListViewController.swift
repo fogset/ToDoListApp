@@ -50,13 +50,10 @@ class TodoListViewController: UITableViewController {
         let item = itemArray[indexPath.row]
         cell.textLabel?.text = item.title
         
+        //Ternary operator ==>
+        //value = condition ? valueIfTrue : valueIfFalse
         
-        
-        if item.done == true{
-            cell.accessoryType = .checkmark
-        }else{
-            cell.accessoryType = .none
-        }
+        cell.accessoryType = item.done ? .checkmark: .none
         
         return cell
     }
@@ -65,7 +62,7 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // set the checkmark state once it has been clicked
-        itemArray[indexPath.row].done = !itemArray[indexPath].done
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -80,12 +77,11 @@ class TodoListViewController: UITableViewController {
             
             let newItem = item()
             newItem.title = textField.text!
-            
             self.itemArray.append(newItem)
             
             //save added item into user defaults
-            
             //self.defaults.set(self.itemArray, forKey: "TodoListArray")
+            
             self.tableView.reloadData()
            
             
