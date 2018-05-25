@@ -9,7 +9,7 @@
 import UIKit
 
 class TodoListViewController: UITableViewController {
-    var itemArray = [item]()
+    var itemArray = [Item]()
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
     
     
@@ -18,25 +18,9 @@ class TodoListViewController: UITableViewController {
         
         
         print(dataFilePath)
-        
-        // load data from user defaults
-        let newItem = item()
-        newItem.title = "Find Mike"
-        itemArray.append(newItem)
-        
-        let newItem2 = item()
-        newItem2.title = "Buy Eggos"
-        itemArray.append(newItem2)
 
-        let newItem3 = item()
-        newItem3.title = "Destroy Demogorgon"
-        itemArray.append(newItem3)
+        loadItems()
 
-        
-        
-       
-        
-        
     }
     
     
@@ -76,9 +60,9 @@ class TodoListViewController: UITableViewController {
         
         let alert = UIAlertController(title: " Add New Todoey Item", message: "",preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Item", style: .default) {(action) in
-//            // what will happen once the user clicks the Add Item button on our UIAlert
-//
-            let newItem = item()
+           // what will happen once the user clicks the Add Item button on our UIAlert
+
+            let newItem = Item()
             newItem.title = textField.text!
             self.itemArray.append(newItem)
             self.saveItems()
@@ -105,6 +89,17 @@ class TodoListViewController: UITableViewController {
             print("Error encoding item array, \(error)")
         }
         self.tableView.reloadData()
+    }
+    func loadItems(){
+        if let data = try? Data(contentsOf: dataFilePath!){
+            let decoder = PropertyListDecoder()
+            do{
+                itemArray = try decoder.decode([Item].self, from: data)
+            }catch{
+                print("Error decoding item array, \(error)")
+            }
+        }
+        
     }
     
     
