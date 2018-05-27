@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class TodoListViewController: UITableViewController {
     var itemArray = [Item]()
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
@@ -18,6 +19,8 @@ class TodoListViewController: UITableViewController {
         
         
         print(dataFilePath)
+        
+        
 
         loadItems()
 
@@ -78,7 +81,7 @@ class TodoListViewController: UITableViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
-    
+    // MARK -Model Manupulation Methods
     func saveItems(){
         //save added item into user defaults
         let encoder = PropertyListEncoder()
