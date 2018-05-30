@@ -11,14 +11,12 @@ import CoreData
 
 class TodoListViewController: UITableViewController {
     var itemArray = [Item]()
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Item.plist")
+    
      let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        print(dataFilePath)
         loadItems()
 
     }
@@ -48,12 +46,12 @@ class TodoListViewController: UITableViewController {
     //Tableview Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        context.delete(itemArray[indexPath.row])
-        itemArray.remove(at: indexPath.row)
+        //context.delete(itemArray[indexPath.row])
+        //itemArray.remove(at: indexPath.row)
         
         // set the checkmark state once it has been clicked
         //itemArray[indexPath.row].setValue("Completed", forKey: "title")
-        //itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         
         saveItems()
@@ -106,7 +104,14 @@ class TodoListViewController: UITableViewController {
             print("Error fetching data from context \(error)")
         }
     }
+   
     
-    
+}
+//MARK: -Search bar methods
+extension TodoListViewController: UISearchBarDelegate{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        print(searchBar.text!)
+    }
 }
 
