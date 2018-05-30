@@ -49,6 +49,7 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // set the checkmark state once it has been clicked
+        itemArray[indexPath.row].setValue("Completed", forKey: "title")
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         saveItems()
         tableView.deselectRow(at: indexPath, animated: true)
