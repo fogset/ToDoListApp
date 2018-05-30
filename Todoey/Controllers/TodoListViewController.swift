@@ -84,7 +84,7 @@ class TodoListViewController: UITableViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
-    // MARK -Model Manupulation Methods
+    //MARK: -Model Manupulation Methods
     func saveItems(){
         //save added item into user defaults
         
@@ -96,13 +96,15 @@ class TodoListViewController: UITableViewController {
         }
         self.tableView.reloadData()
     }
-    func loadItems(){
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
+    
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+
         do {
             itemArray = try context.fetch(request)
         }catch{
             print("Error fetching data from context \(error)")
         }
+        tableView.reloadData()
     }
    
     
@@ -112,18 +114,11 @@ extension TodoListViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-        request.predicate = predicate
-        let sortDescriptr = NSSortDescriptor(key: "title", ascending: true)
-        request.sortDescriptors = [sortDescriptr]
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
-        do {
-            itemArray = try context.fetch(request)
-        }catch{
-            print("Error fetching data from context \(error)")
-        }
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        tableView.reloadData()
+        loadItems(with: request)
     }
 }
 
