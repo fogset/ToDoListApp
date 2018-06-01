@@ -18,7 +18,7 @@ class CategoryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadItems()
+        loadCategories()
         
     }
     //MARK: -TableView Datasource Methods
@@ -44,6 +44,17 @@ class CategoryTableViewController: UITableViewController {
             try context.save()
         }catch{
             print("Error saving context\(error)")
+        }
+        tableView.reloadData()
+    }
+    func loadCategories(){
+        
+        let request : NSFetchRequest<Category> = Category.fetchRequest()
+        
+        do {
+            categories = try context.fetch(request)
+        }catch{
+            print("Error fetching data from categories \(error)")
         }
         tableView.reloadData()
     }
@@ -74,15 +85,7 @@ class CategoryTableViewController: UITableViewController {
     
     
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
-        
-        do {
-           
-        }catch{
-            print("Error fetching data from context \(error)")
-        }
-        tableView.reloadData()
-    }
+    
     
     
 }
