@@ -39,36 +39,26 @@ class CategoryTableViewController: UITableViewController {
     //MARK: -Add New categories
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        var textField = UITextField()
+     
         
-        let alert = UIAlertController(title: " Add New Todoey Item", message: "",preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Item", style: .default) {(action) in
-            // what will happen once the user clicks the Add Item button on our UIAlert
-            
-            
-            let newItem = Item(context: self.context)
-            newItem.title = textField.text!
-            newItem.done = false
-            self.itemArray.append(newItem)
-            self.saveItems()
-            
+        var textField = UITextField()
+        let alert = UIAlertController(title: " Add New Category", message: "",preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add", style: .default) {(action) in
+            let newCategory = Category(context: self.context)
+            newCategory.name = textField.text!
+            self.categories.append(newCategory)
             
         }
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new item"
-            textField = alertTextField
-            print("alertText get triggered")
+        alert.addTextField { (field) in
+            
+            textField = field
+            textField.placeholder = "Add a new category"
         }
         
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
     
-    //MARK: -TableView Datasource Methods
-    
-    //MARK: -TableView Delegate Methods
-    
-    //MARK: -TableView Manipulation Methods
     //MARK: -Model Manupulation Methods
     func saveItems(){
         //save added item into user defaults
