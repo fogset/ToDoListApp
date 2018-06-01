@@ -36,6 +36,18 @@ class CategoryTableViewController: UITableViewController {
     }
     //MARK: -TableView Delegate Methods
     
+    //MARK: -Model Manupulation Methods
+    func saveCategories(){
+        //save added item into user defaults
+        do{
+            
+            try context.save()
+        }catch{
+            print("Error saving context\(error)")
+        }
+        tableView.reloadData()
+    }
+    
     //MARK: -Add New categories
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -47,6 +59,7 @@ class CategoryTableViewController: UITableViewController {
             let newCategory = Category(context: self.context)
             newCategory.name = textField.text!
             self.categories.append(newCategory)
+            self.saveCategories()
             
         }
         alert.addTextField { (field) in
@@ -59,23 +72,12 @@ class CategoryTableViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    //MARK: -Model Manupulation Methods
-    func saveItems(){
-        //save added item into user defaults
-        
-        do{
-            
-            try context.save()
-        }catch{
-            print("Error saving context\(error)")
-        }
-        self.tableView.reloadData()
-    }
+    
     
     func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         
         do {
-            itemArray = try context.fetch(request)
+           
         }catch{
             print("Error fetching data from context \(error)")
         }
