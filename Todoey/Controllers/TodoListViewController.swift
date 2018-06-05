@@ -110,10 +110,7 @@ class TodoListViewController: UITableViewController {
         }else{
             request.predicate = categoryPredicate
         }
-//        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicte predicate])
-//
-//        request.predicate = compoundPredicate
-        
+
         do {
             itemArray = try context.fetch(request)
         }catch{
@@ -127,13 +124,14 @@ class TodoListViewController: UITableViewController {
 //MARK: -Search bar methods
 extension TodoListViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
     }
     //show the entire tableview when delete search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
