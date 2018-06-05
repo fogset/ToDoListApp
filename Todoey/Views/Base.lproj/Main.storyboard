@@ -41,7 +41,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="QeE-ei-y9u" kind="show" id="qqZ-vd-JgP"/>
+                        <segue destination="QeE-ei-y9u" kind="show" identifier="goToItems" id="qqZ-vd-JgP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lot-FF-Jlt" userLabel="First Responder" sceneMemberID="firstResponder"/>
