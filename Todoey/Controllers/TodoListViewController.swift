@@ -57,23 +57,15 @@ class TodoListViewController: UITableViewController {
         if let item = todoItems?[indexPath.row]{
             do{
                 try realm.write {
-                    realm.delete(item)
-                //item.done = !item.done
+                    //realm.delete(item)
+                    item.done = !item.done
                 }
             }catch{
                 print("Error saving done status, \(error)")
             }
         }
         tableView.reloadData()
-        //context.delete(todoItems[indexPath.row])
-        //todoItems.remove(at: indexPath.row)
-        
-        // set the checkmark state once it has been clicked
-        //todoItems[indexPath.row].setValue("Completed", forKey: "title")
-        //todoItems[indexPath.row].done = !todoItems[indexPath.row].done
-        
-        
-        //tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //MARK - Add New Items
@@ -121,27 +113,22 @@ class TodoListViewController: UITableViewController {
     
 }
 //MARK: -Search bar methods
-//extension TodoListViewController: UISearchBarDelegate{
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//
-//        let request : NSFetchRequest<Item> = Item.fetchRequest()
-//
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-//
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//
-//        loadItems(with: request, predicate: predicate)
-//    }
-//    //show the entire tableview when delete search
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchBar.text?.count == 0{
-//            loadItems()
-//
-//            DispatchQueue.main.async {
-//                searchBar.resignFirstResponder()
-//            }
-//
-//        }
-//    }
-//}
-//
+extension TodoListViewController: UISearchBarDelegate{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "title", ascending: true)
+
+    }
+    //show the entire tableview when delete search
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0{
+            loadItems()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+
+        }
+    }
+}
+
