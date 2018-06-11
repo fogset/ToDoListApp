@@ -21,7 +21,7 @@ class CategoryTableViewController: SwipeTableViewController{
         super.viewDidLoad()
         
         loadCategories()
-        tableView.rowHeight = 80
+        
         
     }
     //MARK: -TableView Datasource Methods
@@ -70,6 +70,8 @@ class CategoryTableViewController: SwipeTableViewController{
         
         tableView.reloadData()
     }
+    
+    
     //MARK: - Delete Data from SwipeTableViewController
     override func updateModel(at indexPath: IndexPath) {
         if let categoryForDeletion = self.categories?[indexPath.row]{
@@ -108,4 +110,3 @@ class CategoryTableViewController: SwipeTableViewController{
     }
     
 }
-//MARK: - Swipe Cell Delegate Methods
